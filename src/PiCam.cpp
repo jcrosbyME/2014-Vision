@@ -15,9 +15,9 @@ static void video_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buffe
     if (buffer->length) {
 	    mmal_buffer_header_mem_lock(buffer);
         memcpy(cam->frame.data, buffer->data, 3*cam->width*cam->height);
+        mmal_buffer_header_mem_unlock(buffer);
         cam->callback(cam->frame);
         cv::waitKey(1);
-        mmal_buffer_header_mem_unlock(buffer);
     }
     
     // release buffer back to the pool
@@ -121,6 +121,10 @@ PiCam::PiCam(unsigned int width, unsigned int height, std::function<void(cv::Mat
 
     videoPool = mmal_port_pool_create(videoPort, videoPort->buffer_num, videoPort->buffer_size);
     if(!videoPool) throw std::runtime_error("Couldn't create buffer header pool for video output port");
+
+    MMAL_PARAMETER_EXPOSUREMODE_T exp_mode = {{MMAL_PARAMETER_EXPOSURE_MODE,sizeof(exp_mode)}, MMAL_PARAM_EXPOSUREMODE_FIXEDFPS};
+
+    status = mmal_port_parameter_set(cameraComponent->control, &exp_mode.hdr);
 
     status = mmal_component_enable(cameraComponent);
 

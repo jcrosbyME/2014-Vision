@@ -1,5 +1,5 @@
 SET(COMPILE_DEFINITIONS -Werror)
-add_definitions(-std=c++11)
+add_definitions(-std=c++11 -O2)
 
 include_directories(/opt/vc/include)
 include_directories(/opt/vc/include/interface/vcos/pthreads)
