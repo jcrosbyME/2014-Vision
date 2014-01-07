@@ -16,7 +16,7 @@
 #include <semaphore.h>
 
 /**
- * A class to interact with the raspberry pi camera module.
+ * A simple interface to the raspberry pi camera module.
  */
 class PiCam {
 public:

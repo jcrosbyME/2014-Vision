@@ -1,3 +1,8 @@
+/*
+ * This file was adapted from RaspiVid.c, to serve as a simple c++ 
+ * interface to the raspberry pi camera module.
+ */
+
 #include "PiCam.hpp"
 #include <stdexcept>
 
