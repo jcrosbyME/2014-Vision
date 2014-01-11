@@ -10,18 +10,23 @@
 #define MMAL_CAMERA_VIDEO_PORT 1
 #define MMAL_CAMERA_CAPTURE_PORT 2
 
-static void video_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buffer) {
+void PiCam::video_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buffer) {
     PiCam* cam = (PiCam*) port->userdata;
     if (buffer->length) {
 	    mmal_buffer_header_mem_lock(buffer);
         memcpy(cam->frame.data, buffer->data, 3*cam->width*cam->height);
+        //memcpy(cam->frame.data, buffer->data, cam->width*cam->height);
         mmal_buffer_header_mem_unlock(buffer);
-        cam->callback(cam->frame);
-        cv::waitKey(1);
+        //cam->callback(cam->frame);
+        //cv::waitKey(1);
     }
     
     // release buffer back to the pool
     mmal_buffer_header_release(buffer);
+
+    if (vcos_semaphore_trywait(&(cam->frame_semaphore)) != VCOS_SUCCESS) {
+        vcos_semaphore_post(&(cam->frame_semaphore));
+    }
 
 
     // and send one back to the port (if still open)
@@ -90,7 +95,7 @@ PiCam::PiCam(unsigned int width, unsigned int height, std::function<void(cv::Mat
     status = mmal_port_format_commit(videoPort);
     if(status) throw std::runtime_error("Couldn't set video format.");
 
-    status = mmal_port_enable(videoPort, video_buffer_callback);
+    status = mmal_port_enable(videoPort, PiCam::video_buffer_callback);
     if(status) throw std::runtime_error("Couldn't enable video buffer callback");
 
     if (videoPort->buffer_num < VIDEO_OUTPUT_BUFFERS_NUM)
@@ -133,6 +138,7 @@ PiCam::PiCam(unsigned int width, unsigned int height, std::function<void(cv::Mat
 
     videoPort->userdata = (struct MMAL_PORT_USERDATA_T*)this;
 
+    /*
     if (mmal_port_parameter_set_boolean(videoPort, MMAL_PARAMETER_CAPTURE, 1) != MMAL_SUCCESS)
     {
         throw std::runtime_error("Couldn't start video capture");
@@ -151,7 +157,38 @@ PiCam::PiCam(unsigned int width, unsigned int height, std::function<void(cv::Mat
         if (mmal_port_send_buffer(videoPort, buffer)!= MMAL_SUCCESS)
             throw std::runtime_error("Unable to send a buffer to an encoder output port");
     }
+    */
 
+}
+
+void PiCam::start() {
+    if (mmal_port_parameter_set_boolean(videoPort, MMAL_PARAMETER_CAPTURE, 1) != MMAL_SUCCESS)
+    {
+        throw std::runtime_error("Couldn't start video capture");
+    }
+
+    vcos_semaphore_create(&frame_semaphore, "frame_semaphore", 0);
+
+    int num = mmal_queue_length(videoPool->queue);
+    int q;
+    for (q=0;q<num;q++)
+    {
+        MMAL_BUFFER_HEADER_T *buffer = mmal_queue_get(videoPool->queue);
+    
+        // TODO: Add numbers to these error messages.
+        if (!buffer)
+            throw std::runtime_error("Unable to get a required buffer from pool queue");
+    
+        if (mmal_port_send_buffer(videoPort, buffer)!= MMAL_SUCCESS)
+            throw std::runtime_error("Unable to send a buffer to an encoder output port");
+    }
+
+    while(true) {
+        if(vcos_semaphore_wait(&frame_semaphore) == VCOS_SUCCESS) {
+            callback(frame);
+            cv::waitKey(1);
+        }
+    }
 }
 
 PiCam::~PiCam() {

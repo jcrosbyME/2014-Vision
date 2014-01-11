@@ -7,6 +7,10 @@ unsigned char target = 0;
 
 int hue = 0;
 int range = 0;
+int s_min = 0;
+int s_max = 0;
+int v_min = 0;
+int v_max = 0;
 
 /**
  * Process a single frame. 
@@ -28,7 +32,25 @@ void process_frame(cv::Mat frame) {
     cv::cvtColor(frame, hsv, CV_RGB2HSV);
     //int min[] = {hue-range, 0, 0};
     //int max[] = {hue+range, 255, 255};
-    cv::inRange(hsv, cv::Scalar(hue-range, 0, 0), cv::Scalar(hue+range, 255, 255), binary);
+    cv::inRange(hsv, cv::Scalar(hue-range, s_min, v_min), cv::Scalar(hue+range, s_max, v_max), binary);
+    int numP = 0;
+    float centroid_x = 0.0f;
+    float centroid_y = 0.0f;
+    for(int j = 0; j < frame.rows; ++j) {
+        for(int i = 0; i < frame.cols; ++i) {
+            if(binary(j, i) != 0) {
+                ++numP;
+                centroid_x += i;
+                centroid_y += j;
+            } 
+        }
+    }
+    centroid_x /= numP;
+    centroid_y /= numP;
+
+    cv::circle(binary, cv::Point((int)centroid_x, (int)centroid_y), 5, cv::Scalar(0, 255, 0), -1);
+
+    float r = sqrt(centroid_x*centroid_x + centroid_y*centroid_y);
     /*
     cv::Mat hue(frame.size(), CV_8U);
     const int fromto[] = {0, 0};
@@ -85,17 +107,17 @@ void process_frame(cv::Mat frame) {
     cv::Mat blurred(frame.rows, frame.cols, CV_8UC3);
     cv::GaussianBlur(frame, blurred, cv::Size(9, 9), 2, 2);
     std::vector<cv::Vec3f> circles;
-    cv::HoughCircles(blurred, circles, CV_HOUGH_GRADIENT, 2, frame.rows, 30, 100, 5, 100);
+    cv::HoughCircles(blurred, circles, CV_HOUGH_GRADIENT, 1, frame.rows, 30, 100, 5, 100);
 
-    std::cout << circles.size() << " circles!\n";
     for(size_t i = 0; i < circles.size(); ++i) {
         cv::Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
         int radius = cvRound(circles[i][2]);
         cv::circle(frame, center, 3, cv::Scalar(0), -1, 8, 0);
         cv::circle(frame, center, radius, cv::Scalar(0), 3, 8, 0);
     }
-    */
 
+    cv::imshow("RPi Cam", frame);
+    */
     cv::imshow("RPi Cam", binary);
 }
 
@@ -105,9 +127,14 @@ int main(int argc, char** argv) {
     cv::namedWindow("RPi Cam", cv::WINDOW_AUTOSIZE);
     cv::createTrackbar("Hue", "RPi Cam", &hue, 255, &doNothing);
     cv::createTrackbar("Range", "RPi Cam", &range, 128, &doNothing);
+    cv::createTrackbar("Min Sat", "RPi Cam", &s_min, 255, &doNothing);
+    cv::createTrackbar("Max Sat", "RPi Cam", &s_max, 255, &doNothing);
+    cv::createTrackbar("Min Value", "RPi Cam", &v_min, 255, &doNothing);
+    cv::createTrackbar("Max Value", "RPi Cam", &v_max, 255, &doNothing);
     PiCam cam(320, 240, &process_frame);
-    vcos_sleep(100000);
-    std::cout << (n / 100.0) << " FPS\n";
+    cam.start();
+    //vcos_sleep(100000);
+    //std::cout << (n / 100.0) << " FPS\n";
     //cv::waitKey(0);
     return 0;
 }

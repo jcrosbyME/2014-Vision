@@ -38,6 +38,13 @@ public:
      * MMAL objects. 
      */
     ~PiCam();
+
+
+    /**
+     * Start processing. For now, this goes into a loop which never exits.
+     */
+    void start();
+
     int port;
     //! Requested width for the video stream.
     unsigned int width;
@@ -47,8 +54,8 @@ public:
     cv::Mat frame;
     //! Callback function that processes each frame.
     std::function<void(cv::Mat)> callback;
-    MMAL_POOL_T*        videoPool;
 private:
+    static void video_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buffer);
     //! MMAL Component for the camera module.
     MMAL_COMPONENT_T*   cameraComponent;
     //! Port for preview video.
@@ -57,6 +64,10 @@ private:
     MMAL_PORT_T*        videoPort;
     //! Port for still images.
     MMAL_PORT_T*        stillPort;
+    // ?
+    MMAL_POOL_T*        videoPool;
+
+    VCOS_SEMAPHORE_T    frame_semaphore;
 
     //! Current framerate. Currently unused.
     float framerate;
