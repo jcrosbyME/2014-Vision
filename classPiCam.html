@@ -98,6 +98,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6084845552dc725475ee7f8179727702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7d3481a3e841db00564bb903bb99932"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPiCam.html#ac7d3481a3e841db00564bb903bb99932">~PiCam</a> ()</td></tr>
 <tr class="separator:ac7d3481a3e841db00564bb903bb99932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106f028971804a85a37a931c0d895bd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPiCam.html#a106f028971804a85a37a931c0d895bd8">start</a> ()</td></tr>
+<tr class="separator:a106f028971804a85a37a931c0d895bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -120,9 +122,6 @@ cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 std::function&lt; void(cv::Mat)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">callback</a></td></tr>
 <tr class="memdesc:a85d093e30c39de913ba93b01bf1645e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function that processes each frame. <br/></td></tr>
 <tr class="separator:a85d093e30c39de913ba93b01bf1645e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b65445dce1335ef3ab2de641bd06ffe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b65445dce1335ef3ab2de641bd06ffe"></a>
-MMAL_POOL_T *&#160;</td><td class="memItemRight" valign="bottom"><b>videoPool</b></td></tr>
-<tr class="separator:a9b65445dce1335ef3ab2de641bd06ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -188,6 +187,23 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>VIDEO_FRA
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a106f028971804a85a37a931c0d895bd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PiCam::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start processing. For now, this goes into a loop which never exits. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="PiCam_8hpp_source.html">PiCam.hpp</a></li>
 <li>src/PiCam.cpp</li>
@@ -195,7 +211,7 @@ static const int&#160;</td><td class="memItemRight" valign="bottom"><b>VIDEO_FRA
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 7 2014 12:56:42 for 2014-Vision by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 11 2014 10:50:16 for 2014-Vision by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

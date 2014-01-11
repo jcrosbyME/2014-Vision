@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7epicam',['~PiCam',['../classPiCam.html#ac7d3481a3e841db00564bb903bb99932',1,'PiCam']]]
+  ['width',['width',['../classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5',1,'PiCam']]]
 ];

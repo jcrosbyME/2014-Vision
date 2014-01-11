@@ -112,31 +112,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classPiCam.html#a6084845552dc725475ee7f8179727702">PiCam</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">width</a>, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classPiCam.html#a471803bbe6b997987270027191b39cfb">height</a>, std::function&lt;<span class="keywordtype">void</span>(cv::Mat)&gt; <a class="code" href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">callback</a>);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classPiCam.html#ac7d3481a3e841db00564bb903bb99932">~PiCam</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">int</span> port;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">   43</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">width</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classPiCam.html#a471803bbe6b997987270027191b39cfb">   45</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classPiCam.html#a471803bbe6b997987270027191b39cfb">height</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classPiCam.html#a12969a47fd28b94b306c5941c0e57d44">   47</a></span>&#160;    cv::Mat <a class="code" href="classPiCam.html#a12969a47fd28b94b306c5941c0e57d44">frame</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">   49</a></span>&#160;    std::function&lt;void(cv::Mat)&gt; <a class="code" href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">callback</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    MMAL_POOL_T*        videoPool;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    MMAL_COMPONENT_T*   cameraComponent;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    MMAL_PORT_T*        previewPort;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    MMAL_PORT_T*        videoPort;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    MMAL_PORT_T*        stillPort;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">float</span> framerate;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
-<div class="ttc" id="classPiCam_html_a12969a47fd28b94b306c5941c0e57d44"><div class="ttname"><a href="classPiCam.html#a12969a47fd28b94b306c5941c0e57d44">PiCam::frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdoc">Current frame. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:47</div></div>
-<div class="ttc" id="classPiCam_html_a85d093e30c39de913ba93b01bf1645e7"><div class="ttname"><a href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">PiCam::callback</a></div><div class="ttdeci">std::function&lt; void(cv::Mat)&gt; callback</div><div class="ttdoc">Callback function that processes each frame. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:49</div></div>
-<div class="ttc" id="classPiCam_html_a6084845552dc725475ee7f8179727702"><div class="ttname"><a href="classPiCam.html#a6084845552dc725475ee7f8179727702">PiCam::PiCam</a></div><div class="ttdeci">PiCam(unsigned int width, unsigned int height, std::function&lt; void(cv::Mat)&gt; callback)</div><div class="ttdef"><b>Definition:</b> PiCam.cpp:42</div></div>
-<div class="ttc" id="classPiCam_html_a471803bbe6b997987270027191b39cfb"><div class="ttname"><a href="classPiCam.html#a471803bbe6b997987270027191b39cfb">PiCam::height</a></div><div class="ttdeci">unsigned int height</div><div class="ttdoc">Requested height for the video stream. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:45</div></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classPiCam.html#a106f028971804a85a37a931c0d895bd8">start</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">int</span> port;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">   50</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">width</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classPiCam.html#a471803bbe6b997987270027191b39cfb">   52</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classPiCam.html#a471803bbe6b997987270027191b39cfb">height</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classPiCam.html#a12969a47fd28b94b306c5941c0e57d44">   54</a></span>&#160;    cv::Mat <a class="code" href="classPiCam.html#a12969a47fd28b94b306c5941c0e57d44">frame</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">   56</a></span>&#160;    std::function&lt;void(cv::Mat)&gt; <a class="code" href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">callback</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> video_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buffer);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    MMAL_COMPONENT_T*   cameraComponent;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    MMAL_PORT_T*        previewPort;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    MMAL_PORT_T*        videoPort;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    MMAL_PORT_T*        stillPort;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">// ?</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    MMAL_POOL_T*        videoPool;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    VCOS_SEMAPHORE_T    frame_semaphore;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">float</span> framerate;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;};</div>
+<div class="ttc" id="classPiCam_html_a12969a47fd28b94b306c5941c0e57d44"><div class="ttname"><a href="classPiCam.html#a12969a47fd28b94b306c5941c0e57d44">PiCam::frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdoc">Current frame. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:54</div></div>
+<div class="ttc" id="classPiCam_html_a85d093e30c39de913ba93b01bf1645e7"><div class="ttname"><a href="classPiCam.html#a85d093e30c39de913ba93b01bf1645e7">PiCam::callback</a></div><div class="ttdeci">std::function&lt; void(cv::Mat)&gt; callback</div><div class="ttdoc">Callback function that processes each frame. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:56</div></div>
+<div class="ttc" id="classPiCam_html_a6084845552dc725475ee7f8179727702"><div class="ttname"><a href="classPiCam.html#a6084845552dc725475ee7f8179727702">PiCam::PiCam</a></div><div class="ttdeci">PiCam(unsigned int width, unsigned int height, std::function&lt; void(cv::Mat)&gt; callback)</div><div class="ttdef"><b>Definition:</b> PiCam.cpp:47</div></div>
+<div class="ttc" id="classPiCam_html_a106f028971804a85a37a931c0d895bd8"><div class="ttname"><a href="classPiCam.html#a106f028971804a85a37a931c0d895bd8">PiCam::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition:</b> PiCam.cpp:164</div></div>
+<div class="ttc" id="classPiCam_html_a471803bbe6b997987270027191b39cfb"><div class="ttname"><a href="classPiCam.html#a471803bbe6b997987270027191b39cfb">PiCam::height</a></div><div class="ttdeci">unsigned int height</div><div class="ttdoc">Requested height for the video stream. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:52</div></div>
 <div class="ttc" id="classPiCam_html"><div class="ttname"><a href="classPiCam.html">PiCam</a></div><div class="ttdef"><b>Definition:</b> PiCam.hpp:21</div></div>
-<div class="ttc" id="classPiCam_html_a6715e87bc736fce9a2b7c7c71d968fd5"><div class="ttname"><a href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">PiCam::width</a></div><div class="ttdeci">unsigned int width</div><div class="ttdoc">Requested width for the video stream. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:43</div></div>
-<div class="ttc" id="classPiCam_html_ac7d3481a3e841db00564bb903bb99932"><div class="ttname"><a href="classPiCam.html#ac7d3481a3e841db00564bb903bb99932">PiCam::~PiCam</a></div><div class="ttdeci">~PiCam()</div><div class="ttdef"><b>Definition:</b> PiCam.cpp:153</div></div>
+<div class="ttc" id="classPiCam_html_a6715e87bc736fce9a2b7c7c71d968fd5"><div class="ttname"><a href="classPiCam.html#a6715e87bc736fce9a2b7c7c71d968fd5">PiCam::width</a></div><div class="ttdeci">unsigned int width</div><div class="ttdoc">Requested width for the video stream. </div><div class="ttdef"><b>Definition:</b> PiCam.hpp:50</div></div>
+<div class="ttc" id="classPiCam_html_ac7d3481a3e841db00564bb903bb99932"><div class="ttname"><a href="classPiCam.html#ac7d3481a3e841db00564bb903bb99932">PiCam::~PiCam</a></div><div class="ttdeci">~PiCam()</div><div class="ttdef"><b>Definition:</b> PiCam.cpp:194</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 7 2014 12:56:41 for 2014-Vision by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jan 11 2014 10:50:16 for 2014-Vision by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
