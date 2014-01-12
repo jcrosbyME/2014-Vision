@@ -5,6 +5,8 @@
 
 #include "PiCam.hpp"
 #include <stdexcept>
+#include <iostream>
+#include <chrono>
 
 #define MMAL_CAMERA_PREVIEW_PORT 0
 #define MMAL_CAMERA_VIDEO_PORT 1
@@ -49,6 +51,7 @@ PiCam::PiCam(unsigned int width, unsigned int height, std::function<void(cv::Mat
     cameraComponent(nullptr), previewPort(nullptr), videoPort(nullptr), stillPort(nullptr)
 {
     bcm_host_init();
+    std::cout << "BCM HOST INIT Finished" << std::endl;
 
     MMAL_STATUS_T status;
 	status = mmal_component_create(MMAL_COMPONENT_DEFAULT_CAMERA, &cameraComponent);
@@ -183,9 +186,24 @@ void PiCam::start() {
             throw std::runtime_error("Unable to send a buffer to an encoder output port");
     }
 
+    std::chrono::time_point<std::chrono::system_clock> t1, t2;
+    t1 = std::chrono::system_clock::now();
+
     while(true) {
         if(vcos_semaphore_wait(&frame_semaphore) == VCOS_SUCCESS) {
             callback(frame);
+
+            ++numFrames;
+
+            
+            if(numFrames >= 30) {
+                t2 = std::chrono::system_clock::now();
+                std::chrono::duration<float> secs = t2-t1;
+                t1 = t2;
+                std::cout << (numFrames / secs.count()) << " FPS\n";
+                numFrames = 0;
+            }
+
             cv::waitKey(1);
         }
     }

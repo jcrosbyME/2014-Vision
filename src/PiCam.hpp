@@ -69,6 +69,8 @@ private:
 
     VCOS_SEMAPHORE_T    frame_semaphore;
 
+    int numFrames;
+
     //! Current framerate. Currently unused.
     float framerate;
 };
