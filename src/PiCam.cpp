@@ -19,16 +19,18 @@ void PiCam::video_buffer_callback(MMAL_PORT_T *port, MMAL_BUFFER_HEADER_T *buffe
         memcpy(cam->frame.data, buffer->data, 3*cam->width*cam->height);
         //memcpy(cam->frame.data, buffer->data, cam->width*cam->height);
         mmal_buffer_header_mem_unlock(buffer);
-        //cam->callback(cam->frame);
+        cam->callback(cam->frame);
         //cv::waitKey(1);
     }
     
     // release buffer back to the pool
     mmal_buffer_header_release(buffer);
 
+    /*
     if (vcos_semaphore_trywait(&(cam->frame_semaphore)) != VCOS_SUCCESS) {
         vcos_semaphore_post(&(cam->frame_semaphore));
     }
+    */
 
 
     // and send one back to the port (if still open)
@@ -189,6 +191,7 @@ void PiCam::start() {
     std::chrono::time_point<std::chrono::system_clock> t1, t2;
     t1 = std::chrono::system_clock::now();
 
+    /*
     while(true) {
         if(vcos_semaphore_wait(&frame_semaphore) == VCOS_SUCCESS) {
             callback(frame);
@@ -207,6 +210,7 @@ void PiCam::start() {
             cv::waitKey(1);
         }
     }
+    */
 }
 
 PiCam::~PiCam() {
